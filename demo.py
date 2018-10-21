@@ -9,3 +9,13 @@
 # list = [ele.text.strip() for ele in list] 
 # print(listb)
 # writer.writerow(tbody)
+
+# foo = linkslist[0]
+# print("name:")
+# print(foo.text.strip())
+# print("link:")
+# print(foo["href"])
+# print(linkslist)
+# print(len(linkslist))
+# for i in linkslist:
+#     print(i)
