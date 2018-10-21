@@ -19,3 +19,7 @@
 # print(len(linkslist))
 # for i in linkslist:
 #     print(i)
+
+# soup2 = BeautifulSoup(urllib.request.urlopen(link), 'html.parser')
+#     inner = soup2.find('ol',attrs={"class":"s13vxsj7-0"})
+#     print(inner)
