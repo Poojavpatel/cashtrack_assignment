@@ -8,7 +8,17 @@ myurl = "https://ada.com/conditions/"
 soup = BeautifulSoup(urllib.request.urlopen(myurl), 'html.parser')
 
 links = soup.find_all('a', attrs={"class":"s1lrc7ah-2"})
-linkslist = [p for p in links]
+links = [p for p in links]
+
+for foo in links: 
+    col = [foo.text.strip(), foo["href"]]
+    print(col)
+# foo = linkslist[0]
+# print("name:")
+# print(foo.text.strip())
+# print("link:")
+# print(foo["href"])
 # print(linkslist)
-print(len(alllinkslist))
-for foo in linkslist
+# print(len(linkslist))
+# for i in linkslist:
+#     print(i)
