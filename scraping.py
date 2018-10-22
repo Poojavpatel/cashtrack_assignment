@@ -1,9 +1,9 @@
-import urllib.request
+import urllib.request, csv
 from bs4 import BeautifulSoup
-import csv
+
 f = open('dataoutput.csv', 'w', newline = '')
 writer = csv.writer(f)
-writer.writerow(['name','link'])
+writer.writerow(['name','link','What is?','Symptoms','Causes','Diagnosis','Treatment', 'Prevention'])
 
 soup = BeautifulSoup(urllib.request.urlopen("https://ada.com/conditions/"), 'html.parser')
 
@@ -12,12 +12,15 @@ links = [p for p in links]
 
 for foo in links:
     link=foo["href"]
-    col = [foo.text.strip(), link]
-    writer.writerow(col)
-    # print(col)
+    # col = [foo.text.strip(), link]
+    # writer.writerow(col)
     soup2 = BeautifulSoup(urllib.request.urlopen(link), 'html.parser')
-    inner = soup2.find('ol',attrs={"class":"s13vxsj7-0"}).findChildren('li')
-    inner = [p for p in inner]
-    print(inner)
-
-# <ol class="s13vxsj7-0 iUCILt" id="contents"><li><a href="#what-is-achilles-tendonitis">What is Achilles tendonitis?</a></li><li><a href="#symptoms">Symptoms</a></li><li><a href="#causes">Causes</a></li><li><a href="#diagnosis">Diagnosis</a></li><li><a href="#treatment">Treatment</a></li><li><a href="#prevention">Prevention</a></li><li><a href="#faq">FAQ</a></li><li><a href="#other-ways-to-refer-to-achilles-tendonitis">Other ways to refer to Achilles tendonitis</a></li></ol>
+    sibs = soup2.find(attrs={"id":"symptoms"}).next_siblings
+    sibs2 = [sib.text.strip() for sib in sibs if sib != '\n']
+    print(sibs2)
+    # for sib in sibs:
+    #     if(sib.name != 'h2'):
+    #         # s1.append(sib.strip())
+    #         print(sib)
+    #     else:
+    #         break
