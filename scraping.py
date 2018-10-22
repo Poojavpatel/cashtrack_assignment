@@ -12,15 +12,14 @@ links = [p for p in links]
 
 for foo in links:
     link=foo["href"]
-    # col = [foo.text.strip(), link]
-    # writer.writerow(col)
     soup2 = BeautifulSoup(urllib.request.urlopen(link), 'html.parser')
     sibs = soup2.find(attrs={"id":"symptoms"}).next_siblings
-    sibs2 = [sib.text.strip() for sib in sibs if sib != '\n']
-    print(sibs2)
-    # for sib in sibs:
-    #     if(sib.name != 'h2'):
-    #         # s1.append(sib.strip())
-    #         print(sib)
-    #     else:
-    #         break
+    sibs = [sib for sib in sibs if sib != '\n']
+    s2=[]
+    for sib in sibs:
+        if(sib.name != 'h2'):
+            s1.append(sib.text.strip())
+        else:
+            break
+    s2 = ''.join(s1)
+    writer.writerow([foo.text.strip(),link,'',s2,'','','',''])
