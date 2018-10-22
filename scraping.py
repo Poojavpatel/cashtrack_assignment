@@ -13,13 +13,16 @@ links = [p for p in links]
 
 def getData(soup2, myid):
     res=[]
+    temp = soup2.find(attrs={"id": myid})
+    if not temp:
+        return res
     sibs = soup2.find(attrs={"id": myid}).next_siblings
     sibs = [sib for sib in sibs if sib != '\n']
     for sib in sibs:
-        if(sib.name!='h2' or sib.name!='hr'):
-            res.append(sib.text.strip())
-        else:
+        if(sib.name=='h2' or sib.name=='hr'):
             break
+        else:
+            res.append(sib.text.strip())
     res = ''.join(res)
     return res
 
@@ -31,6 +34,6 @@ for foo in links:
     s3 = getData(soup2, "causes")
     s4 = getData(soup2, "diagnosis")
     s5 = getData(soup2, "treatment")
-    # s6 = getData(soup2, "prevention")
+    s6 = getData(soup2, "prevention")
     s7 = getData(soup2, "faq")
-    writer.writerow([foo.text.strip(),link,'',s2,s3,s4,s5,'',s7])
+    writer.writerow([foo.text.strip(),link,'',s2,s3,s4,s5,s6,s7])
