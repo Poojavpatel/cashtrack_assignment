@@ -12,20 +12,20 @@ app.get('/',(req,res) => {
 });
 
 //  Passport setup
-app.use(passport.initialize());
-app.use(passport.session());
-app.get('/success', (req, res) => res.send("Welcome "+req.query.username+"!!"));
-app.get('/error', (req, res) => res.send("error logging in"));
+// app.use(passport.initialize());
+// app.use(passport.session());
+// app.get('/success', (req, res) => res.send("Welcome "+req.query.username+"!!"));
+// app.get('/error', (req, res) => res.send("error logging in"));
 
-passport.serializeUser(function(user, cb) {
-    cb(null, user.id);
-});
+// passport.serializeUser(function(user, cb) {
+//     cb(null, user.id);
+// });
   
-passport.deserializeUser(function(id, cb) {
-    User.findById(id, function(err, user) {
-      cb(err, user);
-    });
-});
+// passport.deserializeUser(function(id, cb) {
+//     User.findById(id, function(err, user) {
+//       cb(err, user);
+//     });
+// });
 
 port = process.env.PORT || 5000;
 app.listen(port,() => console.log(`Server started at port ${port}`));

@@ -9,7 +9,7 @@
     <script src="main.js"></script>
 </head>
 <body>
-    <form action="/" method="post">
+    <form action="/api/files" method="post" enctype="multipart/form-data">
         <div>
           <label>Username:</label>
           <input type="text" name="username" />
@@ -19,6 +19,8 @@
           <label>Password:</label>
           <input type="password" name="password" />
         </div>
+        <p>Please specify a file, or a set of files:</p>
+        <input type="file" name="excelfile" size="chars">
         <div>
           <input type="submit" value="Submit" />
         </div>
