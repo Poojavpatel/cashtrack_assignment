@@ -33,7 +33,14 @@ app.get('/',(req,res) => {
     res.render('auth.ejs')
 });
 app.post('/upload',(req,res)=>{
-    res.send("snt successfully");
+    upload(req, res,(err) =>{
+        if (err) {
+            res.send("Something went wrong!");
+        }else{
+            console.log(req.file);
+            res.send("File uploaded sucessfully!.");
+        }
+    });
 })
 
 port = process.env.PORT || 5000;
