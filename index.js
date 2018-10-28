@@ -19,16 +19,22 @@ mongoose.connect(mongouri)
 
 // set storage engine
 const storage = multer.diskStorage({
-     destination: './static/uploads/'
+     destination: './static/uploads/',
      filename: function(req, file, callback) {
          callback(null, file.fieldname + "_" + Date.now() + path.extname(file.originalname));
      }
 });
+const upload = multer({
+    storage : storage
+}).single('excelfile');
 
 // Homepage route
 app.get('/',(req,res) => {
     res.render('auth.ejs')
 });
+app.post('/upload',(req,res)=>{
+    res.send("snt successfully");
+})
 
 port = process.env.PORT || 5000;
 app.listen(port,() => console.log(`Server started at port ${port}`));
