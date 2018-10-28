@@ -1,13 +1,15 @@
 const express = require('express');
-// const fileUpload = require('express-fileupload');
 const path = require('path');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const multer = require('multer');
+const ejs = require('ejs');
 const app = express();
 
 app.use(express.json());
-// app.use(fileUpload());
-require('dotenv').config()
+require('dotenv').config();
+app.set('view engine','ejs');
+app.use(express.static('./static'))
 
 // connecting to mongodb
 const mongouri = process.env.mongoURI;
@@ -15,12 +17,18 @@ mongoose.connect(mongouri)
     .then( () => console.log('Connected to MongoDB'))
     .catch( err => console.log('Error while connecting to MongoDB', err));
 
+// set storage engine
+const storage = multer.diskStorage({
+     destination: './static/uploads/'
+     filename: function(req, file, callback) {
+         callback(null, file.fieldname + "_" + Date.now() + path.extname(file.originalname));
+     }
+});
+
 // Homepage route
 app.get('/',(req,res) => {
-    res.sendFile(path.join(__dirname+'/static/auth.html'));
+    res.render('auth.ejs')
 });
-const diseases = require('./routes/diseases.js');
-app.use('/a' , diseases);
 
 port = process.env.PORT || 5000;
 app.listen(port,() => console.log(`Server started at port ${port}`));
