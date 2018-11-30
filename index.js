@@ -25,7 +25,16 @@ const storage = multer.diskStorage({
      }
 });
 const upload = multer({
-    storage : storage
+    storage : storage,
+    fileFilter: function(req,file,cb){
+        const types = /csv|xls|xlsx|slx|xlsb|xlsm/;
+        const extname = types.test(path.extname(file.originalname).toLowerCase());
+        if(extname){
+            return cb(null,true);
+        }else{
+            cb('Error : excel or csv only');
+        }
+    }
 }).single('excelfile');
 
 // Homepage route
@@ -35,7 +44,9 @@ app.get('/',(req,res) => {
 app.post('/upload',(req,res)=>{
     upload(req, res,(err) =>{
         if (err) {
-            res.send("Something went wrong!");
+            res.send("Something went wrong! Make sure to upload only Excel files or csv");
+        }else if(req.file == undefined){
+            res.send("No file selected");
         }else{
             console.log(req.file);
             res.send("File uploaded sucessfully!.");
